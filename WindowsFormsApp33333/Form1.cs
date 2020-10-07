@@ -78,5 +78,10 @@ namespace WindowsFormsApp33333
 
         private void trackBar2_Scroll(object sender, EventArgs e) => Player.Volume = ((TrackBar)sender).Value;
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Clear();
+            Player.Clear_playlist();
+        }
     }
 }

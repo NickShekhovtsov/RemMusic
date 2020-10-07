@@ -183,6 +183,7 @@ namespace DAudio
         /// </summary>
         /// <param name="filepath">Путь к аудиофайлу</param>
         public void LoadAudio(string filepath) => playlist.Add(new Audio(wmp.newMedia(filepath)));
+        public void Clear_playlist() => playlist.Clear();
 
         /// <summary>
         /// Метод добавления нескольких аудио в плейлист
