@@ -10,11 +10,13 @@ using System.Windows.Forms;
 using System.Media;
 using WMPLib;
 using DAudio;
+using WindowsFormsApp33333;
 
 namespace WindowsFormsApp33333
 {
     public partial class Form1 : Form
-    {
+    {   
+        
         private AudioPlayer Player;
         public Form1()
         {
@@ -38,16 +40,17 @@ namespace WindowsFormsApp33333
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            
 
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
+        {   
             if (((Button)sender).Text == "Play")
                 Player.Play();
             else if (((Button)sender).Text == "Pause")
