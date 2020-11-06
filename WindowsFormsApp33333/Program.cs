@@ -22,28 +22,28 @@ namespace WindowsFormsApp33333
         {
 
 
-            SockedManager client = new SockedManager();
+            //SockedManager client = new SockedManager();
 
             //switch (client.msg)
             //{
-            if (client.msg == "play")
-            {
-                WindowsMediaPlayer wplayer = new WMPLib.WindowsMediaPlayer();
-                wplayer.URL = @"H:\Music\Top50 Tracks Deep House Ver.20 (2020)\50.  Jay Aliyev  -  Move On.mp3";
-                wplayer.controls.play();
-                wplayer.settings.volume = 55;
-            }
+            //if (client.msg == "play")
+            //{
+            //    WindowsMediaPlayer wplayer = new WMPLib.WindowsMediaPlayer();
+            //    wplayer.URL = @"H:\Music\Top50 Tracks Deep House Ver.20 (2020)\50.  Jay Aliyev  -  Move On.mp3";
+            //    wplayer.controls.play();
+            //    wplayer.settings.volume = 55;
+            //}
 
 
 
-            if (client.msg == "play2")
-            {
-                WindowsMediaPlayer wplayer = new WMPLib.WindowsMediaPlayer();
-                wplayer.URL = @"H:\Music\Top50 Tracks Deep House Ver.20 (2020)\32.  Jack Flex  -  Deep Inside Me (Ocean Drive Mix).mp3";
-                wplayer.controls.play();
-                wplayer.settings.volume = 50;
-            }
-            //break;
+            //if (client.msg == "play2")
+            //{
+            //    WindowsMediaPlayer wplayer = new WMPLib.WindowsMediaPlayer();
+            //    wplayer.URL = @"H:\Music\Top50 Tracks Deep House Ver.20 (2020)\32.  Jack Flex  -  Deep Inside Me (Ocean Drive Mix).mp3";
+            //    wplayer.controls.play();
+            //    wplayer.settings.volume = 50;
+            //}
+            ////break;
 
             //}
 
