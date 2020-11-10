@@ -6,12 +6,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json;
 using System.Windows.Forms;
 using System.Media;
 using WMPLib;
 using DAudio;
 using System.Net.Sockets;
 using WindowsFormsApp33333;
+using System.Threading;
 
 namespace WindowsFormsApp33333
 {
@@ -20,6 +22,8 @@ namespace WindowsFormsApp33333
         
         private AudioPlayer Player;
         SockedManager client = new SockedManager();
+        public AudioList audioList = new AudioList();
+        private bool isaudioListChanged { get; set;}
         
         
         public Form1()
@@ -41,10 +45,11 @@ namespace WindowsFormsApp33333
                   label2.Text = ((AudioPlayer)s).PositionTime.ToString(@"mm\:ss");
               };
 
-            ServerWorkAsync();
+            InputServerWorkAsync();
 
-           
-            
+
+
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -75,12 +80,34 @@ namespace WindowsFormsApp33333
         {
             using (OpenFileDialog dialog=new OpenFileDialog() { Multiselect=true,Filter="Audio Files|*.mp3;"})
             {
-                if (dialog.ShowDialog()== DialogResult.OK)
+                if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    Player.LoadAudio(dialog.FileName);
+                    Player.LoadAudio(dialog.FileNames);
+
                     listBox1.Items.Clear();
                     listBox1.Items.AddRange(Player.Playlist);
+                    // below must be changed. Promlem is we shoud have list before add information to it. This makes too large list before
+                    for (int i = 0; i < Player.Playlist.Count(); i++)
+                    {
+                        audioList.audioinfolist.Add(new InfoAbSong());
+                    }
+                    for (int i = 0; i < Player.Playlist.Count(); i++)
+                    {
+
+                        audioList.audioinfolist[i] = new InfoAbSong(Player.playlist[i]);
+
+                    }
+
+                    byte[] outputdata;
+                    outputdata = new byte[1024];
+                    string outputjson = JsonSerializer.Serialize<AudioList>(audioList);
+                    outputdata = Encoding.Unicode.GetBytes(outputjson);
+                    client.client.Send(outputdata);
                 }
+
+
+
+
             }
         }
 
@@ -100,46 +127,50 @@ namespace WindowsFormsApp33333
             
 
         }
-        void ServerWork()
+        void InputServerWork()
         {
-            while(true)
-            {  
-                byte[] data;
-                // получаем ответ
-                data = new byte[256]; // буфер для ответа
-                StringBuilder builder = new StringBuilder();
-                int bytes = 0; // количество полученных байт
 
-                do
+            while (true)
+                if (client.client.Available > 0)
                 {
-                    bytes = client.client.Receive(data, data.Length, 0);
-                    builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+                    byte[] data;
+                    // получаем ответ
+                    data = new byte[256]; // буфер для ответа
+                    StringBuilder builder = new StringBuilder();
+                    int bytes = 0; // количество полученных байт
+
+                    do
+                    {
+                        bytes = client.client.Receive(data, data.Length, 0);
+                        builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+                    }
+                    while (client.client.Available > 0);
+
+                    client.msg = builder.ToString();
+
+                    if (client.msg == "play")
+                    {
+                        button1_Click(button1, EventArgs.Empty);
+
+                        //Player.Play();
+                    }
+
+                    if (client.msg == "stop")
+                    {
+                        button1_Click(button1, EventArgs.Empty);
+
+                        //Player.Pause();
+                    }
+
                 }
-                while (client.client.Available > 0);
-                client.msg = builder.ToString();
-                
-                if (client.msg=="play")
-                {
-                    button1_Click(button1, EventArgs.Empty);
-
-                    //Player.Play();
-                }
-
-                if (client.msg == "stop")
-                {
-                    button1_Click(button1, EventArgs.Empty);
-
-                    //Player.Pause();
-                }
-
-            }
+                else Thread.Sleep(100);
         }
 
-        async void ServerWorkAsync()
+        async void InputServerWorkAsync()
         {
-            await Task.Run(()=>ServerWork());
+            await Task.Run(()=>InputServerWork());
         }
 
-
+        
     }
 }

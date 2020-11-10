@@ -55,12 +55,13 @@ namespace DAudio
             SourceUrl = Media.sourceURL;
         }
     }
+    
 
     public sealed class AudioPlayer
     {
         private readonly WindowsMediaPlayer wmp;
         private readonly Timer timer;
-        private readonly List<Audio> playlist;
+        public readonly List<Audio> playlist;
         private int currentIndex;
 
         #region Props
@@ -238,5 +239,21 @@ namespace DAudio
         /// </summary>
         public event Action<object, Audio> AudioSelected;
         #endregion
+    }
+    
+    public sealed class InfoAbSong
+    {
+        public string Name { get; set; }
+        public TimeSpan Time { get; set; }
+        public InfoAbSong(Audio track) { Name = track.Name; Time = track.DurationTime; }
+        public InfoAbSong()
+        {
+
+        }
+    }
+
+    public sealed class AudioList
+    {
+        public List<InfoAbSong> audioinfolist = new List<InfoAbSong>();
     }
 }

@@ -6,9 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp33333", "WindowsFormsApp33333\WindowsFormsApp33333.csproj", "{2A4DD102-7A51-4FED-9D14-590174C59E78}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A62EB2D1-6EA2-4BAD-A2EE-6C8BC57AF9E5}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\Downloads\AudioPlayer (1).cs = ..\..\..\Downloads\AudioPlayer (1).cs
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
